@@ -10,10 +10,22 @@ const array = [
   },
 ];
 
-const obj = array.reduce((accum, item) => {
+type Arr = (typeof array)[number];
+
+type Accumulator = {
+  [K in keyof Arr as Arr[K]]: Record<K, Arr[K]>;
+};
+
+const obj = array.reduce<Accumulator>((accum, item) => {
   accum[item.name] = item;
   return accum;
 }, {});
+
+//Course solution
+// const obj = array.reduce<Record<string, { name: string }>>((accum, item) => {
+//   accum[item.name] = item;
+//   return accum;
+// }, {});
 
 it("Should resolve to an object where name is the key", () => {
   expect(obj).toEqual({
