@@ -2,13 +2,13 @@ import { expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
 const makeSafe =
-  (func: unknown) =>
+  <TParams extends any[], TResult>(func: (...args: TParams) => TResult) =>
   (
-    ...args: unknown
+    ...args: TParams
   ):
     | {
         type: "success";
-        result: unknown;
+        result: TResult;
       }
     | {
         type: "failure";
@@ -52,7 +52,7 @@ it("Should return the result with a { type: 'success' } on a successful call", (
             error: Error;
           }
       >
-    >,
+    >
   ];
 });
 
@@ -84,7 +84,7 @@ it("Should return the error on a thrown call", () => {
             error: Error;
           }
       >
-    >,
+    >
   ];
 });
 
