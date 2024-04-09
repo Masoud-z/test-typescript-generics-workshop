@@ -15,7 +15,10 @@ interface AdminPrivileges extends UserPrivileges {
 
 function getRolePrivileges(role: "admin"): AdminPrivileges;
 function getRolePrivileges(role: "user"): UserPrivileges;
-function getRolePrivileges(role: string): AnonymousPrivileges {
+function getRolePrivileges(role: string): AnonymousPrivileges;
+function getRolePrivileges(
+  role: string
+): AnonymousPrivileges | UserPrivileges | AdminPrivileges {
   switch (role) {
     case "admin":
       return {
@@ -44,6 +47,6 @@ it("Should return the correct privileges", () => {
   type tests = [
     Expect<Equal<typeof adminPrivileges, AdminPrivileges>>,
     Expect<Equal<typeof userPrivileges, UserPrivileges>>,
-    Expect<Equal<typeof anonymousPrivileges, AnonymousPrivileges>>,
+    Expect<Equal<typeof anonymousPrivileges, AnonymousPrivileges>>
   ];
 });
