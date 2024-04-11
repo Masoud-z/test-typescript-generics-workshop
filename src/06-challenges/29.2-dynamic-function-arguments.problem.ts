@@ -8,7 +8,10 @@ interface Events {
   focus: undefined;
 }
 
-export const sendEvent = (event: keyof Events, ...args: any[]) => {
+export const sendEvent = <TKey extends keyof Events>(
+  event: TKey,
+  ...args: Events[TKey] extends undefined ? [] : [payload: Events[TKey]]
+) => {
   // Send the event somewhere!
 };
 
